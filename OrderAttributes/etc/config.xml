@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <!-- section  id-->
+        <order>
+        <!-- group id-->
+            <order_type>
+                <!-- field id-->
+                <order_log_active>0</order_log_active>
+                <default_order_type>website_guest</default_order_type>
+            </order_type>
+        </order>
+    </default>
+</config>

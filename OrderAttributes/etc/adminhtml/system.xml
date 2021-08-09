@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="ns" translate="label" sortOrder="20">
+            <label>Sample Modules NS</label>
+        </tab>
+        <section id="order" translate="label" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Order Attributes</label>
+            <tab>mageru</tab>
+            <resource>Sekulich_OrderAttributes::ns_configuration</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1">
+                <label>General</label>
+                <field id="log_active"  type="select" sortOrder="20" showInDefault="1" translate="label comment" canRestore="1">
+                    <label>Enable logger</label>
+                    <comment>If active all request will be logged to var/log/orders.log</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="order_type" translate="label" type="text" sortOrder="20" showInDefault="1">
+                <label>Order type</label>
+                <field id="default_order_type" type="select" sortOrder="10" showInDefault="1" translate="label" canRestore="1">
+                    <label>Default order type attribute value</label>
+                    <source_model>Sekulich\OrderAttributes\Model\Config\Source\OrderType</source_model>
+                </field>
+                <field id="order_type_attribute_label" type="text" sortOrder="10" showInDefault="1" translate="label">
+                    <label>Order type attribute label</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
