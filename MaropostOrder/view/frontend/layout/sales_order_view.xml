@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Sekulich_MaropostOrder
+ *
+ * @author Natalia Sekulich <sekulich.n@gmail.com>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+        <referenceContainer name="page.main.title" remove="true"/>
+		<referenceContainer name="content">
+			<block class="Sekulich\MaropostOrder\Block\Order\View"
+                   name="Sekulich_maropost_order"
+                   template="Sekulich_MaropostOrder::order/view.phtml">
+				<arguments>
+					<argument name="price_formatter" xsi:type="object">Sekulich\MaropostOrder\ViewModel\PriceFormatter</argument>
+				</arguments>
+                <block template="Sekulich_MaropostOrder::order/payment-form.phtml" name="payment.form" as="stripe-form"/>
+			</block>
+			<referenceBlock name="order.comments" remove="true" />
+            <referenceBlock name="order_items" remove="true" />
+			<referenceBlock name="sales.order.info" remove="true" />
+            <referenceBlock name="sales.order.info.links" remove="true" />
+            <referenceBlock name="info" remove="true" />
+			<referenceBlock name="sales.order.view" remove="true" />
+			<referenceBlock name="order.date" remove="true" />
+			<referenceBlock name="order.status" remove="true" />
+			<referenceBlock name="sales.order.info.links.information" remove="true" />
+		</referenceContainer>
+	</body>
+</page>

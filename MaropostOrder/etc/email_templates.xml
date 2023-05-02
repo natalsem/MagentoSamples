@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Sekulich_MaropostOrder
+ *
+ * @author Natalia Sekulich <sekulich.n@gmail.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="maropost_order_setting_maropost_email_payment_template"
+              label="My Account Payment" file="myaccount_payment_email.html" type="html" module="Sekulich_MaropostOrder" area="adminhtml"/>
+</config>

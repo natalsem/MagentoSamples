@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Sekulich_MaropostOrder
+ *
+ * @author Natalia Sekulich <sekulich.n@gmail.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sekulich_myaccount_payment_send_to_maropost_before">
+        <observer name="sekulich_myaccount_payment_email"
+                  instance="Sekulich\MaropostOrder\Observer\PaymentEmail" />
+    </event>
+</config>

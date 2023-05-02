@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Sekulich_MaropostOrder
+ *
+ * @author Natalia Sekulich <sekulich.n@gmail.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <maropost_order_setting>
+            <maropost_email>
+                <payment>
+                    <enabled>1</enabled>
+                    <template>maropost_order_setting_maropost_email_payment_template</template>
+                </payment>
+            </maropost_email>
+        </maropost_order_setting>
+    </default>
+</config>

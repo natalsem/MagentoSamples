@@ -1,0 +1,41 @@
+<div class="table-wrapper orders-history" data-bind="blockLoader: isLoading">
+    <table class="data table table-order-items history" id="my-orders-table" style="display: none;" data-bind="hidden: isLoading">
+        <caption class="table-caption"><translate args="'Orders'"/></caption>
+        <thead>
+        <tr>
+            <th scope="col" class="col id"><translate args="'Order #'"/></th>
+            <th scope="col" class="col date"><translate args="'Date'"/></th>
+            <th scope="col" class="col total"><translate args="'Order Total'"/></th>
+            <th scope="col" class="col total"><translate args="'Unpaid Amount'"/></th>
+            <th scope="col" class="col total"><translate args="'Payment Date'"/></th>
+            <th scope="col" class="col status"><translate args="'Status'"/></th>
+            <th scope="col" class="col actions"><translate args="'Action'"/></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- ko foreach: maropostOrders() -->
+            <tr>
+                <td data-th="Order #" class="col id" data-bind="text: $data.OrderID"></td>
+                <td data-th="Date" class="col date" data-bind="text: $data.DatePlaced"></td>
+                <td data-th="Order Total" class="col total" data-bind="text: '$'+$data.GrandTotal"></td>
+                <td data-th="Unpaid Amount" class="col total" data-bind="text: '$'+$data.amountDue"></td>
+                <td data-th="Payment Date" class="col payment-date" data-bind="text: $data.DatePaid"></td>
+                <td data-th="Status" class="col status" data-bind="text: $data.OrderStatus"></td>
+                <td data-th="Actions" class="col actions">
+                    <div class="actions">
+                        <a data-bind="attr: { href: $parent.getOrderUrl($data.OrderID) }" class="action view">
+                            <span><translate args="'View Order'"/></span>
+                        </a>
+                        <!-- ko if: !$data.isCancelled && $data.isSynced && $data.amountDue > 0 -->
+                        <button class="action primary button" data-bind="click:$parent.showPaymentForm.bind($parent)">
+                            <span><translate args="'Pay'"/></span>
+                        </button>
+                        <!-- /ko -->
+                    </div>
+                </td>
+            </tr>
+        <!-- /ko -->
+        </tbody>
+    </table>
+</div>
+

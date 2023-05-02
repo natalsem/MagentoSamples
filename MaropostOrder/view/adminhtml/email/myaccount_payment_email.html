@@ -1,0 +1,33 @@
+<!--@subject{{trans "Order"}} #{{var OrderID}} {{trans "paid Via My Account"}}  @-->
+
+<!--@vars {
+"var OrderID":"Order Increment ID",
+"var AmountPayed":"Amount",
+"var Email":"Email",
+"var DatePayed":"Date and Time",
+"var BillCompany":"Company Name"
+} @-->
+
+<table class="order-details">
+    <tr>
+        <td><strong>{{trans "Order ID"}}</strong></td>
+        <td>{{var OrderID}}</td>
+    </tr>
+    <tr>
+        <td><strong>{{trans "Amount"}}</strong></td>
+        <td>{{var AmountPayed}}</td>
+    </tr>
+    <tr>
+        <td><strong>{{trans "Email"}}</strong></td>
+        <td>{{var Email}}</td>
+    </tr>
+    <tr>
+        <td><strong>{{trans "Payment Date"}}</strong></td>
+        <td>{{var DatePayed}}</td>
+    </tr>
+    <tr>
+        <td><strong>{{trans "Company Name"}}</strong></td>
+        <td>{{var BillCompany}}</td>
+    </tr>
+</table>
+

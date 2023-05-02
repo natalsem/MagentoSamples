@@ -1,0 +1,241 @@
+<div data-bind="blockLoader: isLoading">
+    <!-- ko if: pageErrors().length -->
+    <div class="server-errors" data-bind="foreach: pageErrors()">
+        <div data-bind="text: $data"></div>
+    </div>
+    <!-- /ko -->
+    <!-- ko ifnot: pageErrors().length -->
+    <h1 class="page-title">
+        <span class="base" data-ui-id="page-title-wrapper" data-bind="i18n: 'Order #'"></span><span data-bind="text: maropostOrder().OrderID"></span>
+    </h1>
+    <p class="order-details-status">
+        <span data-bind="i18n: 'Status' + ': '"></span>
+        <span data-bind="text: maropostOrder().OrderStatus"></span>
+    </p>
+    <p class="order-details-date">
+        <span class="label" data-bind="i18n: 'Order Date' + ':'"></span>
+        <span data-bind="text: maropostOrder().DatePlaced"></span>
+    </p>
+    <div class="block-balance">
+        <p class="order-details-due ">
+            <span data-bind="i18n: 'Unpaid Amount' + ':'"></span>
+            <span class="due-unpaid" data-bind="text: getFormattedPrice(maropostOrder().amountDue)"></span>
+        </p>
+
+        <!-- ko if: !maropostOrder().isSynced && !maropostOrder().isCancelled-->
+        <span class="due-unpaid-status" data-bind="i18n: 'Applied payment is synchronizing, please check later'"></span>
+        <!-- /ko -->
+        <div class="order-actions">
+            <!-- ko if: maropostOrder().isSynced && maropostOrder().amountDue > 0 && !maropostOrder().isCancelled -->
+            <button class="action primary checkout" type="submit"
+                    data-bind="
+                    attr: {title: $t('Pay Now')},
+                    click: openModal
+                  ">
+                <span data-bind="i18n: 'Pay Now'"></span>
+            </button>
+            <!-- /ko -->
+            <a class="button action primary download-details" data-bind="attr: { href: getCsvUrl(maropostOrder().OrderID)}">
+                <span data-bind="i18n: 'Download Order Details'"></span>
+            </a>
+            <!-- /ko -->
+        </div>
+    </div>
+    <p  data-bind="visible: maropostOrder().PurchaseOrderNumber"><span data-bind="i18n: 'PO Number'"></span>: <span data-bind="text: maropostOrder().PurchaseOrderNumber"></span><br></p>
+    <div class="order-details-items ordered">
+        <div class="order-title">
+            <strong data-bind="i18n:'Items Ordered'"></strong>
+        </div>
+        <div class="table-wrapper order-items order-items">
+            <table class="data table table-order-items" id="my-orders-table">
+                <caption class="table-caption" data-bind="i18n: 'Items Ordered'"></caption>
+                <thead>
+                    <tr>
+                        <th class="col name" data-bind="i18n:'Product Name'"></th>
+                        <th class="col sku" data-bind="i18n: 'SKU'"></th>
+                        <th class="col price" data-bind="i18n: 'Price'"></th>
+                        <th class="col qty" data-bind="i18n: 'Qty'"></th>
+                        <th class="col qty" data-bind="i18n: 'GST'"></th>
+                        <th class="col subtotal" data-bind="i18n: 'Subtotal'"></th>
+                    </tr>
+                </thead>
+
+                <!-- ko foreach: maropostOrder().OrderLine -->
+                <tbody>
+                    <tr>
+                        <td class="col name">
+                            <div class="mobile-heading" data-bind="i18n:'Product Name'"></div>
+                            <strong class="product name product-item-name" data-bind="text: $data.ProductName"></strong>
+                        </td>
+                        <td class="col sku">
+                            <div class="mobile-heading" data-bind="i18n: 'SKU'"></div>
+                            <span data-bind="text: $data.SKU"></span>
+                        </td>
+                        <td class="col price">
+                            <div class="mobile-heading" data-bind="i18n: 'Price'"></div>
+                            <strong data-bind="text: $parent.getFormattedPrice($data.UnitPrice)"></strong>
+                        </td>
+                        <td class="col qty">
+                            <div class="mobile-heading" data-bind="i18n: 'Qty'"></div>
+                            <span class="items-qty" data-bind="text: $data.Quantity"></span>
+                        </td>
+                        <td class="col price">
+                            <div class="mobile-heading" data-bind="i18n: 'GST'"></div>
+                            <span data-bind="text: $parent.getGstAmount($data.UnitPrice, $data.Quantity)"></span>
+                        </td>
+                        <td class="col subtotal">
+                            <div class="mobile-heading" data-bind="i18n: 'Subtotal'"></div>
+                            <strong data-bind="text: $parent.getRowSubtotal($data.Quantity, $data.UnitPrice)"></strong>
+                        </td>
+                    </tr>
+                </tbody>
+                <!-- /ko -->
+
+                <tfoot>
+                    <tr class="subtotal">
+                        <th colspan="5" class="mark" scope="row" data-bind="i18n: 'Subtotal'" data-th="Subtotal"></th>
+                        <td class="subtotal" data-th="subtotal">
+                            <span class="price" data-bind="text: getFormattedPrice(maropostOrder().ProductSubtotal)"></span>
+                        </td>
+                    <tr class="shipping">
+                        <th colspan="5" class="mark" scope="row" >
+                            <span data-bind="i18n: 'Shipping &amp; Handling '"></span><br>
+                            <!-- ko if: maropostOrder().ShippingOption -->
+                            <span data-bind="text: '(' + maropostOrder().ShippingOption + ')'"></span>
+                            <!-- /ko -->
+                        </th>
+                        <td class="amount" data-th="Shipping &amp; Handling">
+                            <span class="price" data-bind="text: getFormattedPrice(maropostOrder().ShippingTotal)"></span>
+                        </td>
+                    </tr>
+                    <tr class="totals-tax">
+                        <th colspan="5" class="mark" scope="row" data-bind="i18n: 'GST'"></th>
+                        <td class="amount" data-th="GST">
+                            <span class="price" data-bind="text: getFormattedPrice(maropostOrder().OrderTax)"></span>
+                        </td>
+                    </tr>
+                    <tr class="totals-discount">
+                        <th colspan="5" class="mark" scope="row" data-bind="i18n: 'Discount Subtotal'"></th>
+                        <td class="amount" data-th="Discount Subtotal">
+                            <span class="price" data-bind="text: getFormattedPrice(getDiscountSubtotal())"></span>
+                        </td>
+                    </tr>
+                    <tr class="grand_total">
+                        <th colspan="5" class="mark" scope="row">
+                            <strong data-bind="i18n: 'Grand Total'"></strong>
+                        </th>
+                        <td class="amount" data-th="Grand Total">
+                            <strong><span class="price" data-bind="text: getFormattedPrice(maropostOrder().GrandTotal)"></span>
+                            </strong>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="block block-order-details-view">
+        <div class="block-title">
+            <strong data-bind="i18n:'Order Information'"></strong>
+        </div>
+        <div class="block-content">
+            <div class="box box-order-shipping-address">
+                <strong class="box-title"><span data-bind="i18n:'Shipping Address'"></span></strong>
+                <div class="box-content">
+                    <address>
+                        <span data-bind="text: maropostOrder().ShipFirstName + ' ' + maropostOrder().ShipLastName"></span><br>
+                        <span data-bind="text: maropostOrder().ShipCompany"></span><br>
+                        <span data-bind="text: maropostOrder().ShipStreetLine1"></span> <span data-bind="text: maropostOrder().ShipStreetLine2"></span><br>
+                        <span data-bind="text: maropostOrder().ShipCity"></span>,
+                        <span data-bind="text: maropostOrder().ShipState"></span>,
+                        <span data-bind="text: maropostOrder().ShipPostCode"></span><br>
+                        <span data-bind="text: maropostOrder().ShipCountry"></span>
+                        <span data-bind="text: 'T:' + maropostOrder().ShipPhone"></span>
+                    </address>
+                </div>
+            </div>
+            <div class="box box-order-billing-address">
+                <strong class="box-title"><span data-bind="i18n:'Billing Address'"></span></strong>
+                <div class="box-content">
+                    <address>
+                        <span data-bind="text: maropostOrder().BillFirstName + ' ' + maropostOrder().BillLastName"></span><br>
+                        <span data-bind="text: maropostOrder().BillCompany"></span><br>
+                        <span data-bind="text: maropostOrder().BillStreetLine1"></span> <span data-bind="text: maropostOrder().BillStreetLine2"></span><br>
+                        <span data-bind="text: maropostOrder().BillCity"></span>,
+                        <span data-bind="text: maropostOrder().BillState"></span>,
+                        <span data-bind="text: maropostOrder().BillPostCode"></span><br>
+                        <span data-bind="text: maropostOrder().BillCountry"></span>
+                        <span data-bind="text: 'T:' + maropostOrder().BillPhone"></span>
+                    </address>
+                </div>
+            </div>
+        </div>
+
+        <div class="box box-order-shippings">
+            <strong class="box-title"><span data-bind="i18n:'Shipping Details'"></span></strong>
+            <div class="box-content">
+                <!-- ko if: trackingNumbers().length -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-bind="i18n:'Shipped With'"></th>
+                            <th data-bind="i18n:'Tracking Number'"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- ko foreach: trackingNumbers() -->
+                        <tr>
+                            <td><span data-bind="text: $data.ShippingMethod"> </span></td>
+                            <td><span data-bind="text: $data.ShippingTracking"></span></td>
+                        </tr>
+                        <!-- /ko -->
+
+                    </tbody>
+                </table>
+                <!-- /ko -->
+                <!-- ko ifnot: trackingNumbers().length -->
+                <span data-bind="i18n:'No shipping information available'"></span>
+                <!-- /ko -->
+            </div>
+        </div>
+
+        <!-- ko if: maropostOrder().OrderPayment -->
+        <div class="box box-order-payments" data-bind="visible: maropostOrder().OrderPayment.length">
+            <strong class="box-title"><span data-bind="i18n:'Payments'"></span></strong>
+            <div class="box-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-bind="i18n:'Payment Date'"></th>
+                            <th data-bind="i18n:'Payment Method'"></th>
+                            <th data-bind="i18n:'Amount'"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- ko foreach: maropostOrder().OrderPayment -->
+                        <tr>
+                            <td><span data-bind="text: $data.DatePaid"></span></td>
+                            <td><span data-bind="text: $parent.formatPaymentMethod($data.PaymentType)"></span></td>
+                            <td><strong data-bind="text: $parent.getFormattedPrice($data.Amount)"> </strong>
+                            </td>
+                        </tr>
+                        <!-- /ko -->
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+    <div class="block block-order-details-view">
+        <div class="block-title">
+            <strong data-bind="i18n:'Additional Information'"></strong>
+        </div>
+        <div class="block-content">
+            <div class="box box-order-shipping-address">
+                <strong data-bind="i18n: 'Comments'"></strong>: <span data-bind="text: maropostOrder().CustomerRef3"></span><br>
+                <strong data-bind="i18n: 'Delivery Instruction'"></strong>: <span data-bind="text: maropostOrder().DeliveryInstruction"></span><br>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+</div>

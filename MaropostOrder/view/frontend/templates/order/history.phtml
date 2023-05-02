@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Sekulich_MaropostOrder
+ *
+ * @author Natalia Sekulich <sekulich.n@gmail.com>
+ * @author      Kirill Kosonogov <kirill.kosonogov@tradesquare.com.au>
+ */
+declare(strict_types=1);
+
+/** @var $block Sekulich\MaropostOrder\Block\Order\History */
+/** @var \Sekulich\MaropostOrder\ViewModel\PriceFormatter $priceFormatter */
+$priceFormatter = $block->getData('price_formatter');
+?>
+<div id="maropost-order-listing" data-bind="scope:'maropostOrderListing'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "#maropost-order-listing": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "maropostOrderListing": {
+                        "component": "Sekulich_MaropostOrder/js/maropost-orders-listing",
+                        "page": "<?= $block->getRequest()->getParam('page') ?>",
+                        "priceFormat": <?= /* @noEscape */ $priceFormatter->getPriceFormatJson() ?>,
+                        "stripeConfig": <?=  /* @noEscape */ $block->getStripeConfig() ?>
+                    }
+                }
+            }
+        }
+    }
+</script>
+
+<?= $this->getChildHtml('stripe-form'); ?>

@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Sekulich_MaropostOrder
+ *
+ * @author Natalia Sekulich <sekulich.n@gmail.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+	<module name="Sekulich_MaropostOrder"/>
+	<sequence>
+		<module name="Magento_Sales"/>
+		<module name="Magento_Customer"/>
+		<module name="StripeIntegration_Payments"/>
+	</sequence>
+</config>

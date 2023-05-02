@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Sekulich_MaropostOrder
+ *
+ * @author Natalia Sekulich <sekulich.n@gmail.com>
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route method="POST" url="/V1/tradesquare/get-maropost-orders">
+        <service class="Sekulich\MaropostOrder\Api\OrderManagementInterface" method="getMaropostOrders"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route method="POST" url="/V1/tradesquare/get-maropost-order">
+        <service class="Sekulich\MaropostOrder\Api\OrderManagementInterface" method="getMaropostOrder"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route method="POST" url="/V1/tradesquare/pay-order-due">
+        <service class="Sekulich\MaropostOrder\Api\OrderPaymentProcessorInterface" method="payAmountDue"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+            <parameter name="amount">%amount%</parameter>
+        </data>
+    </route>
+    <route method="POST" url="/V1/tradesquare/add-payment-to-maropost">
+        <service class="Sekulich\MaropostOrder\Api\OrderPaymentProcessorInterface" method="addPaymentToMaropost"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="paymentId">%payment_id%</parameter>
+            <parameter name="orderData">%order_data%</parameter>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+</routes>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Sekulich_MaropostOrder
+ *
+ * @author Natalia Sekulich <sekulich.n@gmail.com>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <head>
+        <css src="Sekulich_MaropostOrder/css/lib/datatables.css" />
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Sekulich\MaropostOrder\Block\Order\History" name="sales.order.history" cacheable="false">
+                <arguments>
+                    <argument name="price_formatter" xsi:type="object">Sekulich\MaropostOrder\ViewModel\PriceFormatter</argument>
+                </arguments>
+                <block template="Sekulich_MaropostOrder::order/payment-form.phtml" name="payment.form.list" as="stripe-form"/>
+            </block>
+            <block class="Magento\Customer\Block\Account\Dashboard" name="customer.account.link.back" template="Magento_Customer::account/link/back.phtml" cacheable="false"/>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * Sekulich_MaropostOrder
+ *
+ * @author Natalia Sekulich <sekulich.n@gmail.com>
+ */
+?>
+<script type="text/x-magento-template" id="payment-form-template">
+    <form id="payment-form" data-mage-init='{"Sekulich_MaropostOrder/js/stripe-form":{}}'>
+        <div id="payment-message" class="hidden"></div>
+        <div id="spinner"></div>
+        <div id="payment-element">
+            <!--Stripe.js injects the Payment Element-->
+        </div>
+        <button id="submit" class="action primary button">
+            <span id="button-text"><?= __('Pay now') ?></span>
+        </button>
+    </form>
+</script>
