@@ -1,5 +1,5 @@
 # Sekulich_MaropostOrder
-This code does __not__ contain the full functionality. These are only a few files from the real module. The module is used to show the unpaid amount of the order. Order data is fetch from an external system (Maropost).
+This code does __not__ contain the full functionality. These are only a few files from the real module. The module is used to show and pay the unpaid amount of the order. Order data is fetch from an external system (Maropost).
 JS part is removed as it was done by other developer.
 
 ## Samples
