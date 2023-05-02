@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *  Sekulich_OrderStatus
+ *
+ * @author Natalia Sekulich <sekulich.n@gmail.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_order_save_after">
+        <observer name="ns_sales_order_save_after_email_notification" instance="Sekulich\OrderStatus\Observer\OrderStatusEmailNotification" />
+    </event>
+</config>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *  Sekulich_OrderStatus
+ *
+ * @author Natalia Sekulich <sekulich.n@gmail.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="shipping_quote_approved_manager_email_template"
+              label="quote_confirmed Account Confirmation Key"
+              file="quote_confirmed.html"
+              type="html"
+              module="Sekulich_OrderStatus"
+              area="frontend"/>
+    <template id="shipping_quote_approved_customer_email_template"
+              label="quote_confirmed Account Confirmation Key"
+              file="quote_confirmed.html"
+              type="html"
+              module="Sekulich_OrderStatus"
+              area="frontend"/>
+    <template id="shipping_quote_confirmation_email_template"
+              label="quote_confirmed Account Confirmation Key"
+              file="quote_confirmed.html"
+              type="html"
+              module="Sekulich_OrderStatus"
+              area="frontend"/>
+</config>
